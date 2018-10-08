@@ -1,7 +1,6 @@
 // just sample implementation
 // for practice of coding styles
 // not a real 'best' copyFile implementation
-// FIXME: najdite bug, napiste test, spravte fix
 
 const fs = require("fs");
 const EventEmiter = require("events");

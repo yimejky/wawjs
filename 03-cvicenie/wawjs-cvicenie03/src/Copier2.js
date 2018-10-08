@@ -12,7 +12,7 @@ function Copier2(from ,to) {
         const stream = fs.createReadStream(this._from);
         stream.on("data", (chunk) => {
             try {
-                fs.writeFileSync(this._to, chunk); //FIXME
+                fs.writeFileSync(this._to, chunk);
             } catch (err) {
                 wasErr = true;
                 this.emit("error", err);

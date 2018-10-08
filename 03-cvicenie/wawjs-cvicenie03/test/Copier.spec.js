@@ -2,7 +2,6 @@
 //const Copier = require("../src/Copier.js");
 const Copier = require("../src/Copier2.js");
 
-//
 const assert = require("assert");
 const fs = require('fs');
 
@@ -53,22 +52,23 @@ describe("Copying existing files - API styles test", function () {
 
     });
 
-    it("FIXME: copy called multiple times incorrectly appends", function (done) {
-        //TODO: 1 bod za cerveny test dokazujuci bug
-        // 1 bod za vyriesenie a fix v Copier.js
-        let from = __filename; // use self as source
+    it("copy called multiple times incorrectly appends", function (done) {
+        let from = __filename;
         let to = __filename + ".bak";
 
         const c = new Copier(from, to);
+        let count = 0;
         c.on('finish', () => {
             const fromBuf = fs.readFileSync(from);
             const toBuf = fs.readFileSync(to);
             assert(fromBuf.equals(toBuf));
-            done();
+
+            if (++count === 2)
+                done();
         });
 
         c.copy();
-        //c.copy();
+        c.copy();
     });
 
 });
