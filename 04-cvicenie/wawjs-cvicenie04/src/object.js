@@ -1,56 +1,73 @@
 module.exports = {
-  allOwnKeys,
-  allOwnValues,
-  allOwnEntries,
-  getProtoChain,
-  allKeys,
-  forIn,
-  shallowClone,
-  hasInheritedProperty,
-  hasOverridenProperty
+    allOwnKeys,
+    allOwnValues,
+    allOwnEntries,
+    getProtoChain,
+    allKeys,
+    forIn,
+    shallowClone,
+    hasInheritedProperty,
+    hasOverridenProperty
 };
-// Object.keys supporting Symbols and non-enumerables 
+
+// Object.keys supporting Symbols and non-enumerables
 function allOwnKeys(o) {
-  // LOC:3
+    return [...Object.getOwnPropertyNames(o), ...Object.getOwnPropertySymbols(o),]
 }
-// Object.values supporting Symbols and non-enumerables 
+
+// Object.values supporting Symbols and non-enumerables
 function allOwnValues(o) {
-  // LOC: 1
+    return allOwnKeys(o).map(key => o[key])
 }
-// Object.entries supporting Symbols and non-enumerables 
+
+// Object.entries supporting Symbols and non-enumerables
 function allOwnEntries(o) {
-   // LOC: 1
+    return allOwnKeys(o).map(key => [key, o[key]])
 }
+
 // [obj,...protos] array of objects in proto chain
 // starting with obj itself and up-the chain
 function getProtoChain(obj) {
-  //LOC: 7
+    const array = [obj];
+    while (obj = Object.getPrototypeOf(obj)) array.push(obj);
+
+    return array
 }
-// Object.keys including, inherited, not-enumeble, symbols  
+
+// Object.keys including, inherited, not-enumeble, symbols
 function allKeys(obj) {
-  //LOC: 10
+    let arr = [];
+    for (let i in obj) arr.push(i);
+
+    getProtoChain(obj).forEach(proto => allOwnKeys(proto).forEach((key) => {
+        if (!arr.includes(key)) arr.push(key);
+    }));
+
+    return arr;
 }
 
 // for..in loop supporting Symbols and non-enumerable
 // for own and inherited properties
 function forIn(obj, callback) {
-  //LOC: 1
+    allKeys(obj).forEach(callback)
 }
-// create copy of object 
+
+// create copy of object
 // with same propereties, 
 // including symbols, 
 // same values 
 // and same property ownership 
 function shallowClone(obj) {
-  // LOC: 4
+    return Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
 }
 
 // if the property exists only in proto chain
 // not on object
 function hasInheritedProperty(obj, prop) {
-  //LOC:2
+    return prop in obj && !Object.hasOwnProperty.call(obj, prop);
+    //return delete shallowClone(obj)[prop];
 }
 
 function hasOverridenProperty(obj, prop) {
-  //LOC:5
+
 }
