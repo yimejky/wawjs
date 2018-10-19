@@ -7,15 +7,15 @@ module.exports = {
   // TODO: add others (all applicable from array)
 };
 
-function countDefined(){
-
+function countDefined(arr){
+    return filterDefined(arr).length;
 }
-function filterDefined(){
-
+function filterDefined(arr){
+    return arr.filter(() => true);
 }
-function sort(){
-
+function sort(arr, fn){
+    return filterDefined(arr).sort(fn);
 }
-function reverse(){
-	
+function reverse(arr){
+    return [...arr].reverse();
 }
