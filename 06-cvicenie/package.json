@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "SELF_TEST=1 node -r ./src/pipe.js -r ./src/max.js -r ./src/and.js -r ./src/pipe.js -p '\"done\"' "
+    "test": "SELF_TEST=1 node -r ./src/pipe.js -r ./src/max.js -r ./src/and.js -r ./src/deepFreeze.js -p '\"done\"' "
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "traverse": "^0.6.6"
+  }
 }

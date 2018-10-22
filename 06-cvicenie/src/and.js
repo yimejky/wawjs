@@ -1,17 +1,22 @@
-const and = (f1, ...fns) => x => !!fns
-  .reduce((r, fn) => r = r && fn(x), f1(x));
-
-// TODO: reimplement using recursion
+// const and = (f1, ...fns) => x => !!fns.reduce((r, fn) => r && fn(x), f1(x));
 // and quick exit, avoid useles loop of whole array
+
+function and(f1, ...fns) {
+    return (x) => {
+        if (!f1)
+            return true;
+
+        return f1(x) && and(...fns)(x);
+    }
+}
 
 module.exports = and;
 
 //-------------------------- tests ----------------------------------------
 process.env.SELF_TEST && ((and) => {
-  console.error(`[self test]:${__filename}:...`)
+  console.error(`[self test]:${__filename}:...`);
 
-
-  var assert = console.assert.bind(console);
+  const assert = console.assert.bind(console);
 
   let composed = and(
     () => true,
@@ -19,7 +24,7 @@ process.env.SELF_TEST && ((and) => {
   );
   assert(typeof composed === "function");
 
-  assert(composed() == true);
+  assert(composed() === true);
 
 
   assert(and(
@@ -35,7 +40,7 @@ process.env.SELF_TEST && ((and) => {
   assert(and(
     (i) => i < 10,
     (i) => i < 5
-  )(12) === false)
+  )(12) === false);
 
   assert(and(
     () => false
