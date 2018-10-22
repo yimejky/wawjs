@@ -1,14 +1,15 @@
 // initial motivation:
 // implement max() similar to Math.max()
-// but be sure that the mathod does not fail
+// but be sure that the method does not fail
 // (does not return NaN if some parameter is not convertible to number)
+// demonstartion of:
+// - transforming functions (changing parameters)
+// - composition (and())
 
-
-// common helpers usable esewhere as well
+// common helpers usable aslo elsewhere 
 const and = require("./and.js")
+
 const filterArgs = require("./filterArgs.js");
-
-
 // helper
 const isNumber = (any) => typeof any === "number" && any === any;
 
@@ -16,7 +17,6 @@ const isNumber = (any) => typeof any === "number" && any === any;
 // max implementations
 // this would be manual code, not bad 
 // however let's try other approach
-// 
 // const maxNumber = (...args) => Math.max(...args.filter(isNumber));
 
 // implementation using transforming function
@@ -31,7 +31,6 @@ const minInteger = todo;
 const minFinite = todo;
 const isNegative = todo;
 const maxNegativeInteger = todo;
-
 
 // you can use it for outher APIs not only Max
 //const concat = filterArgs(String.prototype.concat.bind(''), (x) => typeof x === "string")

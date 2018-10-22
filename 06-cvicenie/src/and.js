@@ -1,5 +1,5 @@
-const and = (fn, ...fns) => x => fns
-  .reduce((r, fn) => r = r && !!fn(x), !!fn(x));
+const and = (f1, ...fns) => x => !!fns
+  .reduce((r, fn) => r = r && fn(x), f1(x));
 
 // TODO: reimplement using recursion
 // and quick exit, avoid useles loop of whole array
@@ -39,12 +39,27 @@ process.env.SELF_TEST && ((and) => {
 
   assert(and(
     () => false
-  )() === false, "shell work with one arg");
-
+  )() === false, "shall work with one arg");
 
   assert(and(
     () => "whatever"
-  )() === true, "shell coerce");
+  )() === true, "shall coerce");
+
+  let c = 0;
+  and(
+    () => true,
+    () => false,
+    () => c = 1 // this shall never execure
+  )();
+  assert(c === 0);
+
+  let c2 = 0;
+  and(
+    () => ++c, //return truthy 1
+    () => ++c, //return truthy 2
+    () => ++c //return truthy 3
+  )();
+  assert(c === 3, "all 'true' methods called");
 
   console.error(`[self test]:${__filename}:OK`)
 

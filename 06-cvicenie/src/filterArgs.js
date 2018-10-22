@@ -22,5 +22,5 @@ process.env.SELF_TEST && ((filterArgs) => {
     "noop shell receive/return only strings from args"
   );
 
-
+  console.error(`[self test]:${__filename}:OK`)
 })(module.exports);
