@@ -1,3 +1,6 @@
+// TODO: finish this to use all streams 
+// from node.js in single demo 
+
 const http = require("http");
 
 //-------------------

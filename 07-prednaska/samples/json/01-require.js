@@ -1,1 +1,0 @@
-let obj = require("../data/large.json");
