@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "zip-client": "node src/zip-client.js",
+    "zip-server": "node src/zip-server.js",
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",

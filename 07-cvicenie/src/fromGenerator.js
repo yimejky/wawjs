@@ -15,7 +15,31 @@ fromGenerator(sequence).on("data", function(data){
 
 fromGenerator(sequence).pipe(stringify).pipe(process.stdout);
 */
-module.exports = function(generator) {
 
+const { Readable } = require('stream')
 
+class FromGenerator extends Readable {
+  constructor (options, generator) {
+    super(options)
+    this.resource = generator
+  }
+
+  _read (size) {
+    let b, data
+
+    do {
+      data = this.resource.next()
+
+      if (!data.done) {
+        b = this.push(data.value)
+      } else {
+        this.push(null)
+        return
+      }
+    } while (b)
+  }
+}
+
+module.exports = function (generator) {
+  return new FromGenerator({ objectMode: true }, generator)
 }
