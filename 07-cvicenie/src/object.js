@@ -23,17 +23,33 @@ module.exports = {
     return new Transform({
       objectMode: true,
       transform (ch, e, cb) {
-        const value = fn(ch)
+        const fnValue = fn(ch)
 
-        if (value instanceof Promise) {
-          value.then((data) => {
-            data && this.push(data)
+        if (fnValue instanceof Promise) {
+          fnValue.then((data) => {
+            data && this.push(ch)
             cb()
           })
         } else {
-          value && this.push(ch)
+          fnValue && this.push(ch)
           cb()
         }
+      }
+    })
+  },
+  filterDuplicates: function (fn) {
+    const set = new Set()
+
+    return new Transform({
+      objectMode: true,
+      transform (ch, e, cb) {
+        const value = fn(ch)
+
+        if (!set.has(value)) {
+          set.add(value)
+          this.push(ch)
+        }
+        cb()
       }
     })
   }

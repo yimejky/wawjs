@@ -7,8 +7,26 @@ describe('From generator', function () {
     for (let i = 1; i <= limit; i++) yield `${i}`
   }
 
+  function generatorToArray (generator) {
+    const array = []
+
+    while (1) {
+      const item = generator.next()
+      if (item.done) return array
+      array.push(item.value)
+    }
+  }
+
   it('basic fromGenerator test', function () {
-    const rs = fromGenerator(generator(10))
-    rs.pipe(process.stdout)
+    const stream = fromGenerator(generator(5))
+    const validArray = generatorToArray(generator(5))
+
+    const array = []
+    stream.on('data', (data) => {
+      array.push(data)
+    })
+    stream.on('end', () => {
+      assert.deepStrictEqual(array, validArray)
+    })
   })
 })
