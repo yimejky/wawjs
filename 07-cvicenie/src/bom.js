@@ -6,8 +6,6 @@ module.exports = {
     return new Transform({
       objectMode: true,
       transform (ch, e, cb) {
-        //console.log('DEBUG', ch, typeof ch)
-
         if (counter === 0) {
           this.push('\ufeff')
         }
@@ -22,7 +20,6 @@ module.exports = {
     return new Transform({
       objectMode: true,
       transform (ch, e, cb) {
-
         if (counter === 0) {
           const [bom, rest] = ch.split('\ufeff')
           rest && this.push(rest)
