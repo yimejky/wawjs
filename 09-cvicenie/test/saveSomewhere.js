@@ -19,7 +19,7 @@ describe("saveSomewhere", function() {
     ];
     saveSomewhere(paths, "sample", (err, saved) => {
       if (err) return done(err);
-      
+
       assert.equal(saved, `${__dirname}/data/a/sample.txt`);
       done();
     })

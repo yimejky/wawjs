@@ -3,6 +3,10 @@
  module.exports = saveSomewhere;
 
  function saveSomewhere(paths, data, cb) {
-   // const tasks = 
-   // async....(tasks, cb);
+   const tasks = paths.map((path) => {
+     return function (callback) {
+       fs.writeFile(path, data, (err) => callback(err, path))
+     }
+   })
+   async.tryEach(tasks, cb)
  }
