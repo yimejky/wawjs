@@ -12,7 +12,7 @@ function b(params) {
   return Promise.reject(err);
 }
 
-function* c(params) {
+async function c(params) {
   //...
   return data; //impl. promise
   throw err;
