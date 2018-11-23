@@ -23,11 +23,12 @@ request(`${URL}&pageIndex=${1}`, (err, { statusCode }, result) => {
 
     const pageCounts = Math.ceil(total / ps)
     const urls = Array.from(Array(pageCounts), (_, x) => x)
-      .map((num) => num + 1)
-      .map((index) => `${URL}&pageIndex=${index}`)
+      .map(num => num + 1)
+      .map(index => `${URL}&pageIndex=${index}`)
 
-    async.concatLimit(urls, 4, (url, callback) =>
-        request(url, (err, { statusCode }, result) =>
+  async.concatLimit(
+    urls, 4,
+    (url, callback) => request(url, (err, { statusCode }, result) =>
           (err || statusCode !== 200)
             ? callback(err)
             : callback(err, result.rules)),

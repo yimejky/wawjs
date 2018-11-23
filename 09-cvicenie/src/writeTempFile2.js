@@ -11,11 +11,11 @@ function writeTempFile (fileName, ...args /* data, options, callback*/) {
   let data = args.pop()
 
   async.waterfall([
-    function (callback) {
-      let tempDir = path.join(os.tmpdir(), `${process.pid}-`)
+    (callback) => {
+      const tempDir = path.join(os.tmpdir(), `${process.pid}-`)
       fs.mkdtemp(tempDir, callback)
     },
-    function (folder, callback) {
+    (folder, callback) => {
       try {
         const filePath = path.join(folder, fileName)
         fs.writeFile(filePath, data, options, (err) => callback(err, filePath))

@@ -26,7 +26,6 @@ request(`${URL}&pageIndex=${1}`, (err, { statusCode }, result) => {
 
     const tasks = []
 
-    // TODO: refactor to only functional
     for (let i = 2; i < pageCounts; i++) {
       tasks.push((callback) => {
         request(`${URL}&pageIndex=${i}`, (err, { statusCode }, result) => {
