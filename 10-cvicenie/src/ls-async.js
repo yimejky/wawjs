@@ -1,20 +1,17 @@
-// prints ../*/*.* 
+// prints ../*/*.*
 // means all files in parent folder folders
 
 const fs = require("fs").promises;
 
 (async () => {
-
   let dirs = await ls(".");
-  dirs = dirsOnly(dirs)
-    .map(({ name }) => name);
+  dirs = dirsOnly(dirs).map(({ name }) => name);
+
   let files = await Promise.all(dirs.map(ls));
   files = [].concat(...files);
   files = filesOnly(files);
-  files = files
-    .map(({ name }) => name);
+  files = files.map(({ name }) => name);
   print(files);
-
 })();
 
 async function ls(d) {

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --colors",
-    "sonar:old": "time node src/sonar-rules-cli.js 'https://gazelle.ihe.net/sonar/api/rules/search?languages=js&' | json -a name",
-    "sonar:new": "time node src/sonar-rules-cli-0.0.2.js 'https://gazelle.ihe.net/sonar/api/rules/search?languages=js&' | json -a name"
+    "sonar:old": "time node src/sonar-rules-cli.js 'https://gazelle.ihe.net/sonar/api/rules/search?languages=js&pageSize=10&' | json -a name",
+    "sonar:new": "time node src/sonar-rules-cli-0.0.2.js 'https://gazelle.ihe.net/sonar/api/rules/search?languages=js&pageSize=10&' | json -a name"
   },
   "keywords": [],
   "author": "",

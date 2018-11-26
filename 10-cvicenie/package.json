@@ -1,0 +1,24 @@
+{
+  "name": "10-cvicenie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --colors",
+    "start:async": "node src/ls-async.js",
+    "start:promises": "node src/ls-promises.js",
+    "start:sonar": "node src/sonar.js 'https://gazelle.ihe.net/sonar/api/rules/search?languages=js&pageSize=10&' | json -a name"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "mocha": "^5.2.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  }
+}

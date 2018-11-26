@@ -6,9 +6,7 @@ const path = require('path')
 const async = require('async')
 
 function writeTempFile (fileName, ...args /* data, options, callback*/) {
-  let cb = args.pop()
-  let options = args.pop()
-  let data = args.pop()
+  const callback = args.pop()
 
   async.waterfall([
     (callback) => {
@@ -18,10 +16,10 @@ function writeTempFile (fileName, ...args /* data, options, callback*/) {
     (folder, callback) => {
       try {
         const filePath = path.join(folder, fileName)
-        fs.writeFile(filePath, data, options, (err) => callback(err, filePath))
+        fs.writeFile(filePath, ...args, (err) => callback(err, filePath))
       } catch (err) {
         callback(err)
       }
     }
-  ], cb)
+  ], callback)
 }

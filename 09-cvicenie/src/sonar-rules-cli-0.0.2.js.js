@@ -17,7 +17,7 @@ const [, , URL] = process.argv
 const async = require('async')
 const request = require('request').defaults({ json: true })
 
-request(`${URL}&pageIndex=${1}`, (err, { statusCode }, result) => {
+request(`${URL}&pageIndex=1&`, (err, { statusCode }, result) => {
     if (err || statusCode !== 200) return
     const { ps, total } = result
 
@@ -26,12 +26,12 @@ request(`${URL}&pageIndex=${1}`, (err, { statusCode }, result) => {
       .map(num => num + 1)
       .map(index => `${URL}&pageIndex=${index}`)
 
-  async.concatLimit(
-    urls, 4,
-    (url, callback) => request(url, (err, { statusCode }, result) =>
-          (err || statusCode !== 200)
-            ? callback(err)
-            : callback(err, result.rules)),
+    async.concatLimit(
+      urls, 4,
+      (url, callback) => request(url, (err, { statusCode }, result) =>
+        (err || statusCode !== 200)
+          ? callback(err)
+          : callback(err, result.rules)),
       (err, results) => console.log(JSON.stringify(results, null, 2))
     )
   }

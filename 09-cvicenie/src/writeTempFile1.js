@@ -5,28 +5,20 @@ const os = require('os')
 const path = require('path')
 
 function writeTempFile (fileName, ...args /* data, options, callback*/) {
-  let cb = args.pop()
-  let options = args.pop()
-  let data = args.pop()
+  const callback = args.pop()
 
   let tempDir = path.join(os.tmpdir(), `${process.pid}-`)
-  try {
-    fs.mkdtemp(tempDir, (err, folder) => {
-      if (err)
-        return cb(err, folder)
+  fs.mkdtemp(tempDir, (err, folder) => {
+    if (err)
+      return callback(err, folder)
 
-      const filePath = path.join(folder, fileName)
-      try {
-        fs.writeFile(filePath, data, options, (err) => {
-          cb(err, filePath)
-        })
-      } catch (err) {
-        cb(err)
-      }
-    })
-  } catch (err) {
-    cb(err)
-  }
+    const filePath = path.join(folder, fileName)
+    try {
+      fs.writeFile(filePath, ...args, (err) => callback(err, filePath))
+    } catch (err) {
+      callback(err)
+    }
+  })
 }
 
 console.log(writeTempFile.length)

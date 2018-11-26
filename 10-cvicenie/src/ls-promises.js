@@ -1,4 +1,4 @@
-// prints ../*/*.* 
+// prints ../*/*.*
 // means all files in parent folder folders
 
 const fs = require("fs").promises;
@@ -10,9 +10,7 @@ ls(".")
   .then(files => Promise.all(files))  // Promise of [] of []s
   .then(files => [].concat(...files)) // [[],[],...]-> [.,.,.]
   .then(filesOnly)
-  .then((files) =>
-    files.map(({ name }) => name)
-  )
+  .then((files) => files.map(({ name }) => name))
   .then(print) // sync undefined
 
 function ls(d) {
