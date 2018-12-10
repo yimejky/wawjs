@@ -1,10 +1,9 @@
-module.exports = writeTempFile
-
 const fs = require('fs').promises
 const os = require('os')
 const path = require('path')
 
-async function writeTempFile (fileName, ...args /* data, options, callback*/) {
+// ASYNC
+async function writeTempFile1 (fileName, ...args) {
   const callback = args.pop()
 
   try {
@@ -19,7 +18,8 @@ async function writeTempFile (fileName, ...args /* data, options, callback*/) {
   }
 }
 
-async function writeTempFile (fileName, ...args /* data, options, callback*/) {
+// PROMISE
+function writeTempFile2 (fileName, ...args) {
   const callback = args.pop()
 
   let tempDir = path.join(os.tmpdir(), `${process.pid}-`)
@@ -33,4 +33,22 @@ async function writeTempFile (fileName, ...args /* data, options, callback*/) {
 
 }
 
-console.log(writeTempFile.length)
+// CALLBACK
+function writeTempFile3 (fileName, ...args) {
+  const callback = args.pop()
+
+  let tempDir = path.join(os.tmpdir(), `${process.pid}-`)
+  fs.mkdtemp(tempDir, (err, folder) => {
+    if (err)
+      return callback(err, folder)
+
+    const filePath = path.join(folder, fileName)
+    try {
+      fs.writeFile(filePath, ...args, (err) => callback(err, filePath))
+    } catch (err) {
+      callback(err)
+    }
+  })
+}
+
+module.exports = { writeTempFile1, writeTempFile2, writeTempFile3 }
